@@ -24,6 +24,10 @@ export default function Inicio() {
         href="/menu"
         titulo="Ver menú"
       />
+      <BotonLink
+        href="/pedidos"
+        titulo="Ver pedidos"
+      />
     </Pantalla>
   );
 }

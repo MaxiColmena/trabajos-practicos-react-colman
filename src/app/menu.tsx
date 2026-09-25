@@ -43,6 +43,12 @@ export default function Menu() {
         href="/"
         titulo="Volver al inicio"
       />
+
+      <BotonLink
+        href="/pedidos"
+        titulo="Ver pedidos"
+      />
+      
     </Pantalla>
   );
 }
