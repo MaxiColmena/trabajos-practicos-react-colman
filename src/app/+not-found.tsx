@@ -1,32 +1,23 @@
 import { Text } from 'react-native';
-import { Link } from 'expo-router';
 
 import Pantalla from '../components/pantalla';
 import BotonLink from '../components/botonLink';
 import { estilos } from '../components/estilos';
 
-export default function Inicio() {
+export default function NotFound() {
   return (
     <Pantalla>
       <Text style={estilos.titulo}>
-        Comedor IPF
+        Página no encontrada
       </Text>
 
       <Text style={estilos.texto}>
-        Bienvenido al comedor.
+        La ruta que intentaste abrir no existe.
       </Text>
 
       <BotonLink
-        href="/login"
-        titulo="Iniciar sesión"
-      />
-      <BotonLink
-        href="/menu"
-        titulo="Ver menú"
-      />
-      <BotonLink
-        href="/pedidos"
-        titulo="Ver pedidos"
+        href="/"
+        titulo="Volver al inicio"
       />
     </Pantalla>
   );

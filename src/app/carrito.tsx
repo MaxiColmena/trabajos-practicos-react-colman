@@ -1,5 +1,4 @@
 import { Text } from 'react-native';
-import { router } from 'expo-router';
 
 import Pantalla from '../components/pantalla';
 import Boton from '../components/boton';
@@ -14,17 +13,8 @@ export default function Carrito() {
     total,
     puedeDeshacer,
     deshacerUltimo,
-    confirmarPedido,
   } = useApp();
 
-const confirmar = () => {
-  const pedido = confirmarPedido();
-
-  if (pedido) {
-    alert(`Pedido #${pedido.numero} confirmado`);
-    router.push('/pedidos');
-  }
-};
   return (
     <Pantalla>
       <Text style={estilos.titulo}>
@@ -56,10 +46,14 @@ const confirmar = () => {
         deshabilitado={!puedeDeshacer}
       />
 
-      <Boton
+      <BotonLink
+        href="/carrito/nota"
+        titulo="Agregar nota"
+      />
+
+      <BotonLink
+        href="/confirmar"
         titulo="Confirmar pedido"
-        onPress={confirmar}
-        deshabilitado={carrito.length === 0}
       />
 
       <BotonLink

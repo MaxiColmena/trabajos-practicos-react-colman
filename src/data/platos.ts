@@ -8,32 +8,32 @@ export type Plato = {
 export const platos: Plato[] = [
   {
     id: 1,
-    nombre: "Milanesa con papas",
+    nombre: 'Milanesa con papas',
     precio: 7500,
-    categoria: "Principal",
+    categoria: 'Principal',
   },
   {
     id: 2,
-    nombre: "Hamburguesa completa",
+    nombre: 'Hamburguesa completa',
     precio: 6500,
-    categoria: "Principal",
+    categoria: 'Principal',
   },
   {
     id: 3,
-    nombre: "Pizza especial",
+    nombre: 'Pizza especial',
     precio: 8000,
-    categoria: "Principal",
+    categoria: 'Principal',
   },
   {
     id: 4,
-    nombre: "Ensalada completa",
+    nombre: 'Ensalada completa',
     precio: 5000,
-    categoria: "Ensalada",
+    categoria: 'Ensalada',
   },
   {
     id: 5,
-    nombre: "Gaseosa",
+    nombre: 'Gaseosa',
     precio: 2000,
-    categoria: "Bebida",
+    categoria: 'Bebida',
   },
 ];

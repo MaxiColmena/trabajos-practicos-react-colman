@@ -31,6 +31,14 @@ export default function Menu() {
             titulo="Agregar"
             onPress={() => agregar(plato)}
           />
+
+          <BotonLink
+            href={{
+              pathname: '/menu/[id]',
+              params: { id: String(plato.id) },
+            }}
+            titulo="Ver detalle"
+          />
         </View>
       ))}
 
@@ -48,7 +56,6 @@ export default function Menu() {
         href="/pedidos"
         titulo="Ver pedidos"
       />
-      
     </Pantalla>
   );
 }

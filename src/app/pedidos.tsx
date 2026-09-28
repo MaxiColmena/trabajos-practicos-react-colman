@@ -46,6 +46,11 @@ export default function Pedidos() {
       )}
 
       <BotonLink
+        href="/atendidos"
+        titulo="Ver pedidos atendidos"
+      />  
+
+      <BotonLink
         href="/"
         titulo="Volver al inicio"
       />
