@@ -1,12 +1,12 @@
 import { Text, View } from 'react-native';
 
-import Pantalla from '../components/pantalla';
-import Boton from '../components/boton';
-import BotonLink from '../components/botonLink';
-import { estilos } from '../components/estilos';
+import Pantalla from '../../../components/pantalla';
+import Boton from '../../../components/boton';
+import BotonLink from '../../../components/botonLink';
+import { estilos } from '../../../components/estilos';
 
-import { platos } from '../data/platos';
-import { useApp } from '../context/appContext';
+import { platos } from '../../../data/platos';
+import { useApp } from '../../../context/appContext';
 
 export default function Menu() {
   const { agregar } = useApp();
@@ -43,7 +43,7 @@ export default function Menu() {
       ))}
 
       <BotonLink
-        href="/carrito"
+        href={{ pathname: '/(tabs)/carrito' }}
         titulo="Ver carrito"
       />
 
@@ -53,7 +53,7 @@ export default function Menu() {
       />
 
       <BotonLink
-        href="/pedidos"
+        href="/pedido"
         titulo="Ver pedidos"
       />
     </Pantalla>

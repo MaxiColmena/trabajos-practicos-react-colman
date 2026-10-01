@@ -1,56 +1,57 @@
-# Welcome to your Expo app 👋
+# Comedor IPF - Trabajo Práctico N° 2
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Estructura de Rutas y Navegadores
 
-## Get started
+A continuación se detalla la estructura de carpetas dentro de `src/app` y los navegadores utilizados en cada `_layout`:
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+src/app/
+├── _layout.tsx                     <-- Stack (Raíz, envuelve toda la app y maneja modales)
+├── (tabs)/
+│   ├── _layout.tsx                 <-- Tabs (Barra inferior con Inicio, Menú y Carrito)
+│   ├── index.tsx                   <-- Pantalla de Inicio
+│   ├── menu/
+│   │   ├── _layout.tsx             <-- Stack anidado para el Menú
+│   │   ├── index.tsx               <-- Lista de Platos
+│   │   └── [id].tsx                <-- Detalle de Plato
+│   └── carrito/
+│       ├── _layout.tsx             <-- Stack anidado para el Carrito
+│       ├── index.tsx               <-- Mi Carrito
+│       └── nota.tsx                <-- Agregar Nota
+├── categorias/
+│   └── [categoria].tsx             <-- Detalle de Categoría (Stack Screen)
+├── buscar.tsx                      <-- Buscador (Stack Screen)
+├── confirmar.tsx                   <-- Resumen del Pedido (Modal en Stack Raíz)
+├── turno/
+│   └── [numero].tsx                <-- Turno Actual (Stack Screen)
+├── login.tsx                       <-- Iniciar Sesión (Modal protegido, solo sin sesión)
+├── cocina/
+│   ├── _layout.tsx                 <-- Drawer (Menú lateral protegido, solo con sesión)
+│   ├── index.tsx                   <-- Pedido actual en cola
+│   └── atendidos.tsx               <-- Historial de pedidos
+├── ayuda/
+│   ├── index.tsx                   <-- Índice de Ayuda
+│   └── [...slug].tsx               <-- Artículos de Ayuda (Catch-all)
+├── pedido.tsx                      <-- Redirección a /carrito
+└── +not-found.tsx                  <-- Pantalla Error 404
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Justificación: `replace` vs `push` en `/confirmar`
 
-### Other setup steps
+En la pantalla de confirmación, cuando el usuario toca "Confirmar", se utiliza `router.replace({ pathname: '/turno/[numero]' ... })`.
+**Razón:** Se usa `replace` en lugar de `push` para que la pantalla de confirmación sea **reemplazada** en la pila por la pantalla de turno. De esta manera, si el usuario presiona el botón "Atrás" desde el turno, no volverá a la pantalla de "Confirmar" (lo cual permitiría enviar el pedido por duplicado por error o ver un carrito vacío en proceso), sino que volverá a la pantalla anterior (menú o inicio). 
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Enlace de Prueba (Deep Link)
 
-## Learn more
+Puedes probar abrir el plato 3 directamente en Expo Go utilizando el siguiente enlace (reemplazando `TU_IP` por la IP local mostrada al correr la app, por ej: `192.168.1.10:8081`):
 
-To learn more about developing your project with Expo, look at the following resources:
+`exp://TU_IP/--/menu/3`
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Si la aplicación está compilada (build propio), el deep link nativo sería:
+`comedoripf://menu/3`
 
-## Join the community
+## Ejecutar el Proyecto
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx expo start
+```

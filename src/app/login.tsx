@@ -23,7 +23,7 @@ export default function Login() {
     }
 
     setError('');
-    router.replace('/');
+    router.replace('/' as any);
   };
 
   return (

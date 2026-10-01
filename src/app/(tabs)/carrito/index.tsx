@@ -1,11 +1,11 @@
 import { Text } from 'react-native';
 
-import Pantalla from '../components/pantalla';
-import Boton from '../components/boton';
-import BotonLink from '../components/botonLink';
-import { estilos } from '../components/estilos';
+import Pantalla from '../../../components/pantalla';
+import Boton from '../../../components/boton';
+import BotonLink from '../../../components/botonLink';
+import { estilos } from '../../../components/estilos';
 
-import { useApp } from '../context/appContext';
+import { useApp } from '../../../context/appContext';
 
 export default function Carrito() {
   const {
@@ -47,7 +47,7 @@ export default function Carrito() {
       />
 
       <BotonLink
-        href="/carrito/nota"
+        href={{ pathname: '/(tabs)/carrito/nota' }}
         titulo="Agregar nota"
       />
 
@@ -57,7 +57,7 @@ export default function Carrito() {
       />
 
       <BotonLink
-        href="/menu"
+        href={{ pathname: '/(tabs)/menu' }}
         titulo="Volver al menú"
       />
     </Pantalla>

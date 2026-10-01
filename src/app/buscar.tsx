@@ -13,7 +13,7 @@ import { estilos } from '../components/estilos';
 
 import { platos } from '../data/platos';
 
-const CATEGORIAS = ['Principal', 'Ensalada', 'Bebida'];
+const CATEGORIAS = ['almuerzo', 'desayuno', 'bebidas', 'kiosco'];
 
 export default function Buscar() {
   const {

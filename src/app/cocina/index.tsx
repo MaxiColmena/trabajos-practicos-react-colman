@@ -3,6 +3,7 @@ import { Text } from 'react-native';
 import Boton from '../../components/boton';
 import Pantalla from '../../components/pantalla';
 import { estilos } from '../../components/estilos';
+
 import { useApp } from '../../context/appContext';
 
 export default function Cocina() {
