@@ -16,6 +16,7 @@ El catálogo es de fantasía y aventura (Tolkien, El Principito, Narnia, Harry P
 - **Scroll infinito:** al llegar al final del Catálogo se agrega otra tanda con los mismos libros en orden aleatorio (`hooks/useCatalogoInfinito.ts`). La `key` de cada fila es `ISBN-tanda`, nunca el índice.
 - **Volver al Catálogo:** el modal de reserva y la pestaña Mis reservas tienen arriba un botón "Catálogo" que cierra lo que esté abierto y vuelve al menú principal.
 - **Debounce:** el buscador espera 300 ms sin escribir antes de buscar.
+- **Versión web:** el escáner usa solo el ingreso manual del ISBN. En la web, `expo-camera` lee códigos con un lector WebAssembly (`zxing-wasm`) que descarga de un CDN, y si la red lo bloquea la app tira errores. En el teléfono el lector es nativo.
 
 ---
 
