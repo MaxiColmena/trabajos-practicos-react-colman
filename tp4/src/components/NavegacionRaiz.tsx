@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { opcionesHeader } from '../constants/navegacion';
 import { useBiblioteca } from '../context/BibliotecaContext';
+import BotonVolverCatalogo from './BotonVolverCatalogo';
 
 // Stack raíz. Está fuera de _layout porque necesita leer la sesión del Context,
 // y el Provider se monta en el layout.
@@ -14,7 +15,7 @@ export default function NavegacionRaiz() {
       <Stack.Screen name="buscar" options={{ title: 'Buscar' }} />
       <Stack.Screen
         name="reservar/[isbn]"
-        options={{ presentation: 'modal', title: 'Confirmar reserva' }}
+        options={{ presentation: 'modal', title: 'Confirmar reserva', headerLeft: BotonVolverCatalogo }}
       />
       <Stack.Screen name="permisos/[recurso]" options={{ presentation: 'modal', title: 'Permiso' }} />
       <Stack.Screen name="+not-found" options={{ title: 'Página no encontrada' }} />

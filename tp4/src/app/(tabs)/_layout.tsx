@@ -1,4 +1,5 @@
 import { Tabs } from 'expo-router/js-tabs';
+import BotonVolverCatalogo from '../../components/BotonVolverCatalogo';
 import IconoTab from '../../components/IconoTab';
 import { opcionesTabs } from '../../constants/navegacion';
 
@@ -17,6 +18,7 @@ export default function TabsLayout() {
         name="reservas"
         options={{
           title: 'Mis reservas',
+          headerRight: BotonVolverCatalogo, // después de reservar se llega acá
           tabBarIcon: ({ color, size }) => <IconoTab nombre="bookmark-outline" color={color} size={size} />,
         }}
       />
