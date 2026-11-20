@@ -243,7 +243,7 @@ Usa `canAskAgain`, porque `status` solo no alcanza: en los pasos 2 y 4 `status` 
 
 El problema es que la persona recibe un recordatorio de un préstamo que la app ya no muestra, y no hay forma de cancelarlo desde la app. Lo resolvería guardando préstamos e IDs con `AsyncStorage` (el desafío de persistencia). Al iniciar, compararía con `Notifications.getAllScheduledNotificationsAsync()` y cancelaría las que no correspondan a ningún préstamo.
 
-**c)** En Android 13 o superior las notificaciones necesitan el permiso `POST_NOTIFICATIONS` en tiempo de ejecución, y el sistema asocia el diálogo a que la app tenga al menos un canal creado. Si se pide sin canal, puede que el diálogo no aparezca. Por eso `usePermiso` llama a `crearCanalPrestamos()` antes de `requestPermissionsAsync` (`hooks/usePermiso.ts`, línea 48).
+**c)** En Android 13 o superior las notificaciones necesitan el permiso `POST_NOTIFICATIONS` en tiempo de ejecución, y el sistema asocia el diálogo a que la app tenga al menos un canal creado. Si se pide sin canal, puede que el diálogo no aparezca. Por eso `usePermiso` llama a `crearCanalPrestamos()` antes de `requestPermissionsAsync` (`hooks/usePermiso.ts`, línea 48). En Expo Go ese paso se saltea porque ahí la creación del canal falla (ver D3 c).
 
 En **Android 12** no existe el permiso en tiempo de ejecución: las notificaciones vienen habilitadas, `requestPermissionsAsync` devuelve `granted` sin mostrar diálogo, y el canal se sigue necesitando (desde Android 8) para mostrarlas.
 
@@ -296,7 +296,8 @@ Además está en `android.blockedPermissions` (`"android.permission.RECORD_AUDIO
 - **`blockedPermissions`, `microphonePermission` y `recordAudioAndroid`:** se aplican al generar el binario, y Expo Go ya está compilado.
 - **Los permisos en Ajustes:** aparecen bajo "Expo Go", no bajo "Biblioteca IPF".
 
-El canal `prestamos` sí se crea en tiempo de ejecución, pero dentro de Expo Go: aparece en Ajustes > Apps > Expo Go > Notificaciones, mezclado con los canales de Expo Go, y no en una app "Biblioteca IPF".
+- **El canal `prestamos`:** en Expo Go para Android (SDK 58), crearlo con `setNotificationChannelAsync` falla del lado nativo (`NullPointerException` en `ExpoNotificationChannelManager`) y el error cortaba el pedido del permiso. Lo comprobé en el teléfono: al tocar "Continuar" salía ese error y el diálogo nunca aparecía. Por eso `crearCanalPrestamos()` (`lib/notificaciones.ts`) detecta Expo Go con `Constants.executionEnvironment` y ahí no crea el canal: la notificación usa el canal por defecto. En una build propia el canal se crea antes de pedir el permiso, como corresponde. Además la llamada está en un `try/catch` para que una falla del canal nunca impida pedir el permiso.
+- **El diálogo de notificaciones:** en Expo Go aparece uno propio de Expo ("Biblioteca IPF needs permissions for posting notifications…"), no el del sistema, porque el permiso real lo tiene Expo Go.
 
 Para verificarlo haría una **development build** (`npx expo run:android` o `eas build --profile development`) y revisaría el diálogo, el manifiesto generado y los permisos de la app instalada.
 
