@@ -10,6 +10,7 @@ import Separador from '../components/Separador';
 import { DEMORA_BUSQUEDA_MS } from '../constants/biblioteca';
 import { colores, espacio } from '../constants/tema';
 import { buscarLibros } from '../lib/api';
+import { buscarPorCodigo, digitosDeCodigo } from '../lib/catalogo';
 import type { Libro } from '../types';
 
 // Guardamos para qué texto es cada respuesta: así sabemos si está al día
@@ -22,8 +23,13 @@ export default function Buscar() {
   const [respuesta, setRespuesta] = useState<Respuesta | null>(null);
   const [intento, setIntento] = useState(0);
 
+  // buscarLibros (la API de la consigna) solo busca por título o autor.
+  // Si escriben números, es un ISBN (o parte): se busca en el catálogo, sin pedido.
+  const digitos = digitosDeCodigo(consulta);
+  const esCodigo = digitos !== null;
+
   useEffect(() => {
-    if (!consulta) return;
+    if (!consulta || esCodigo) return;
     let vigente = true;
 
     // Debounce: se pide recién cuando la persona deja de escribir 300 ms
@@ -42,21 +48,26 @@ export default function Buscar() {
       vigente = false;
       clearTimeout(temporizador);
     };
-  }, [consulta, intento]);
+  }, [consulta, esCodigo, intento]);
 
   function reintentar() {
     setRespuesta(null);
     setIntento((n) => n + 1);
   }
 
-  const alDia = respuesta !== null && respuesta.para === consulta;
+  const alDia = esCodigo || (respuesta !== null && respuesta.para === consulta);
+  const conError = !esCodigo && respuesta?.error === true;
+  const resultados = esCodigo ? buscarPorCodigo(digitos) : (respuesta?.libros ?? []);
+  const sinResultados = esCodigo
+    ? `No tenemos ningún libro con el código ${consulta}.`
+    : `Ningún título ni autor coincide con "${consulta}".`;
 
   return (
     <View style={estilos.pantalla}>
       <View style={estilos.buscador}>
         <CampoTexto
-          etiqueta="Título o autor"
-          placeholder="Ej.: Tolkien, Principito…"
+          etiqueta="Título, autor o ISBN"
+          placeholder="Ej.: Tolkien, Principito, 978-950-547-269-7…"
           value={q ?? ''}
           // setParams cambia la URL sin apilar una pantalla por letra
           onChangeText={(texto) => router.setParams({ q: texto })}
@@ -70,17 +81,17 @@ export default function Buscar() {
         <EstadoMensaje
           icono="search-outline"
           titulo="¿Qué querés leer?"
-          detalle="Escribí parte del título o el nombre del autor."
+          detalle="Escribí parte del título, el nombre del autor o el ISBN de la contratapa."
         />
       ) : !alDia ? (
         <EstadoCargando mensaje="Buscando…" />
-      ) : respuesta.error ? (
+      ) : conError ? (
         <EstadoMensaje icono="cloud-offline-outline" tono="error" titulo="No pudimos buscar" detalle="Revisá tu conexión y probá de nuevo.">
           <Boton texto="Reintentar" onPress={reintentar} />
         </EstadoMensaje>
       ) : (
         <FlatList
-          data={respuesta.libros}
+          data={resultados}
           keyExtractor={(libro) => libro.isbn}
           renderItem={({ item }) => <FilaLibro libro={item} />}
           ItemSeparatorComponent={Separador}
@@ -90,7 +101,7 @@ export default function Buscar() {
             <EstadoMensaje
               icono="book-outline"
               titulo="No encontramos nada"
-              detalle={`Ningún título ni autor coincide con "${consulta}".`}
+              detalle={sinResultados}
             />
           }
         />
