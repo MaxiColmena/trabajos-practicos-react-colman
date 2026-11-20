@@ -16,6 +16,7 @@ El catálogo es de fantasía y aventura (Tolkien, El Principito, Narnia, Harry P
 - **Scroll infinito:** al llegar al final del Catálogo se agrega otra tanda con los mismos libros en orden aleatorio (`hooks/useCatalogoInfinito.ts`). La `key` de cada fila es `ISBN-tanda`, nunca el índice.
 - **Volver al Catálogo:** el modal de reserva y la pestaña Mis reservas tienen arriba un botón "Catálogo" que cierra lo que esté abierto y vuelve al menú principal.
 - **Debounce:** el buscador espera 300 ms sin escribir antes de buscar.
+- **Pruebas:** tests unitarios de `Pila` y `Cola` con `jest-expo` (12 casos, incluido desencolar una cola vacía) en `src/estructuras/__tests__/`. Se corren con `npm test`.
 - **Búsqueda por ISBN:** si se escriben números (el ISBN completo, con guiones o una parte), el buscador filtra el catálogo por código sin llamar a `buscarLibros`, porque esa función de la consigna solo busca por título o autor y se dejó tal cual.
 - **Versión web:** el escáner usa solo el ingreso manual del ISBN. En la web, `expo-camera` lee códigos con un lector WebAssembly (`zxing-wasm`) que descarga de un CDN, y si la red lo bloquea la app tira errores. En el teléfono el lector es nativo.
 
@@ -164,6 +165,10 @@ En Expo Go se usa la forma `exp://IP:8081/--/ruta`. En una build propia, el esqu
 
 > npx tsc --noEmit
 (sin errores)
+
+> npm test
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
 ```
 
 ## Capturas
