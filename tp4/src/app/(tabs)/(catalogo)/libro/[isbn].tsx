@@ -4,6 +4,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import Boton from '../../../../components/Boton';
 import DatoLibro from '../../../../components/DatoLibro';
 import EstadoMensaje from '../../../../components/EstadoMensaje';
+import Portada from '../../../../components/Portada';
 import { colores, espacio, fuente, radio } from '../../../../constants/tema';
 import { useBiblioteca } from '../../../../context/BibliotecaContext';
 import { buscarLibroPorIsbn, esIsbnValido } from '../../../../lib/catalogo';
@@ -47,7 +48,8 @@ export default function DetalleLibro() {
   return (
     <ScrollView contentContainerStyle={estilos.contenido}>
       <Stack.Screen options={{ title: libro.titulo }} />
-      <View style={estilos.portada}>
+      <View style={estilos.cabecera}>
+        <Portada libro={libro} tamanio="grande" />
         <Text style={estilos.titulo}>{libro.titulo}</Text>
         <Text style={estilos.autor}>{libro.autor}</Text>
       </View>
@@ -73,21 +75,23 @@ const estilos = StyleSheet.create({
     padding: espacio.l,
     gap: espacio.xl,
   },
-  portada: {
+  cabecera: {
     padding: espacio.xl,
     borderRadius: radio.l,
     backgroundColor: colores.superficie,
-    borderLeftWidth: 6,
-    borderLeftColor: colores.acento,
+    alignItems: 'center',
     gap: espacio.s,
   },
   titulo: {
     color: colores.texto,
     fontSize: fuente.grande,
     fontWeight: '800',
+    textAlign: 'center',
+    marginTop: espacio.s,
   },
   autor: {
     color: colores.textoSuave,
     fontSize: fuente.media,
+    textAlign: 'center',
   },
 });

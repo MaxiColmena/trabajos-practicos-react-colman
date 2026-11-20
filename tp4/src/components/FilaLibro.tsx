@@ -3,6 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { colores, espacio, fuente, radio, TOQUE_MINIMO } from '../constants/tema';
 import type { Libro } from '../types';
+import Portada from './Portada';
 
 export default function FilaLibro({ libro }: { libro: Libro }) {
   return (
@@ -11,7 +12,7 @@ export default function FilaLibro({ libro }: { libro: Libro }) {
       accessibilityLabel={`${libro.titulo}, de ${libro.autor}`}
       onPress={() => router.push({ pathname: '/libro/[isbn]', params: { isbn: libro.isbn } })}
       style={({ pressed }) => [estilos.fila, pressed && estilos.presionada]}>
-      <View style={estilos.lomo} />
+      <Portada libro={libro} />
       <View style={estilos.textos}>
         <Text style={estilos.titulo} numberOfLines={1}>
           {libro.titulo}
@@ -31,19 +32,13 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: espacio.m,
-    paddingVertical: espacio.m,
-    paddingHorizontal: espacio.l,
+    paddingVertical: espacio.s,
+    paddingHorizontal: espacio.m,
     backgroundColor: colores.superficie,
     borderRadius: radio.m,
   },
   presionada: {
     backgroundColor: colores.superficieAlta,
-  },
-  lomo: {
-    width: 6,
-    alignSelf: 'stretch',
-    borderRadius: radio.s,
-    backgroundColor: colores.acentoOscuro,
   },
   textos: {
     flex: 1,

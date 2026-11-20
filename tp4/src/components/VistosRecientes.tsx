@@ -4,6 +4,7 @@ import { CANTIDAD_RECIENTES } from '../constants/biblioteca';
 import { colores, espacio, fuente, radio, TOQUE_MINIMO } from '../constants/tema';
 import { useBiblioteca } from '../context/BibliotecaContext';
 import { buscarLibroPorIsbn } from '../lib/catalogo';
+import Portada from './Portada';
 
 // Los 3 del tope de la Pila, del más reciente al más antiguo
 export default function VistosRecientes() {
@@ -27,6 +28,7 @@ export default function VistosRecientes() {
               accessibilityLabel={`Abrir ${libro.titulo}`}
               onPress={() => router.push({ pathname: '/libro/[isbn]', params: { isbn: libro.isbn } })}
               style={({ pressed }) => [estilos.tarjeta, pressed && estilos.presionada]}>
+              <Portada libro={libro} />
               <Text style={estilos.tituloLibro} numberOfLines={2}>
                 {libro.titulo}
               </Text>
@@ -60,17 +62,18 @@ const estilos = StyleSheet.create({
   tarjeta: {
     flex: 1,
     minHeight: TOQUE_MINIMO + espacio.xl,
-    padding: espacio.m,
+    padding: espacio.s,
     borderRadius: radio.m,
     backgroundColor: colores.superficieAlta,
-    borderLeftWidth: 3,
-    borderLeftColor: colores.acento,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: espacio.s,
   },
   presionada: {
     opacity: 0.8,
   },
   tituloLibro: {
+    flex: 1,
     color: colores.texto,
     fontSize: fuente.chica,
     fontWeight: '600',

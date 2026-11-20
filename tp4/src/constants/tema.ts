@@ -29,6 +29,13 @@ export const fuente = {
   media: 17,
   titulo: 22,
   grande: 28,
+  enorme: 56,
+};
+
+// Tapas de los libros (proporción 2:3)
+export const portada = {
+  chica: { ancho: 48, alto: 72 },
+  grande: { ancho: 140, alto: 210 },
 };
 
 export const radio = {
