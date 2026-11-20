@@ -2,7 +2,7 @@
 
 **Alumno: Colman Maximo**
 
-Las rutas de archivos son relativas a `tp4/src/`. Lo marcado como *(comprobado)* lo verifiqué corriendo la app con `npx expo start --web`. Lo que depende del sistema del teléfono (diálogos de permisos, botón atrás de Android) está razonado con la documentación de Expo y de Android.
+Las rutas de archivos son relativas a `tp4/src/`. Lo marcado como *(comprobado)* lo verifiqué corriendo la app con `npx expo start --web`. Además probé la app en un **teléfono Android real con Expo Go**: el recorrido del permiso de cámara (D1), el permiso de notificaciones y la notificación recibida (D2, D3) están comprobados ahí, con capturas en el README (`capturas/telefono/`). Lo que no pude probar en el teléfono está razonado con la documentación de Expo y de Android.
 
 ---
 
@@ -213,6 +213,8 @@ Si usara solo `useEffect` con `[]`, la pestaña mostraría "Notificaciones apaga
 | 4 | Continuar → No permitir | La tarjeta cambia a "La cámara está bloqueada…" con **Abrir Ajustes** | `denied` | `false` |
 | 5 | Toca "Escanear" otra vez | Bloqueado: Abrir Ajustes + ingreso manual | `denied` | `false` |
 | 6 | Abrir Ajustes → habilita → vuelve | Aparece la cámara | `granted` | `true` |
+
+*(Comprobado en un Android real con Expo Go: las capturas del recorrido están en `capturas/telefono/recorrido-camara/`. Los valores de `status` y `canAskAgain` salen de cómo `lib/permisos.ts` llega a cada estado que se ve en pantalla.)*
 
 La clave está en el paso 4: desde Android 11, si la persona niega el mismo permiso dos veces, el sistema lo deja como "no volver a preguntar". Por eso ahí `canAskAgain` pasa a `false` y mi app muestra "Abrir Ajustes" en lugar de "Continuar".
 
