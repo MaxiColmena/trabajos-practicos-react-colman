@@ -73,14 +73,14 @@ Uso un número y no, por ejemplo, `error`. Si dependiera de `error`, el efecto c
 | t = 500 ms | Llega "borges" | Resultados de **borges** | Sigue "Buscando…". El pedido de "borges" sale recién a los 500 ms (200 + 300 de debounce) |
 | t = 1.400 ms | Llega "bor" | Resultados de **bor** con "borges" escrito (**incorrecto**) | El pedido de "bor" nunca se hizo. Aunque llegara, se descarta. Se ven solo los resultados de "borges" |
 
-**a) Qué hace la limpieza** (`app/buscar.tsx`, líneas 25-45)
+**a) Qué hace la limpieza** (`app/buscar.tsx`, líneas 31-51)
 
 Cada ejecución del efecto tiene su propia variable `vigente` y su propio `temporizador`. Cuando cambia `consulta`, React ejecuta **primero la limpieza del efecto anterior** y después el efecto nuevo. La limpieza hace dos cosas:
 
 - `clearTimeout(temporizador)`: si la persona sigue escribiendo, el pedido viejo ni se manda (debounce).
 - `vigente = false`: si el pedido ya salió, cuando vuelva el `.then` ve `vigente === false` y no hace `setRespuesta`.
 
-Además, cada respuesta guarda para qué texto es (`para`), y en la línea 52 `alDia` compara con la consulta actual. Así no se muestra un resultado viejo ni por un instante.
+Además, cada respuesta guarda para qué texto es (`para`), y en la línea 58 `alDia` compara con la consulta actual. Así no se muestra un resultado viejo ni por un instante.
 
 **b) La propuesta `if (texto === q)`**
 
@@ -88,7 +88,7 @@ No funciona. El `.then` es una clausura creada en el render en que se armó el e
 
 **c) URL y botón atrás**
 
-Con `router.setParams({ q: texto })` (línea 62) la URL cambia a `/buscar?q=b`, `/buscar?q=bo`… pero **se reemplazan los parámetros de la misma pantalla**, sin agregar entradas a la pila. "Atrás" vuelve directo a donde estaba antes del buscador. Con `router.push` se apilaría una pantalla `/buscar` por cada letra, y para salir habría que tocar atrás una vez por letra.
+Con `router.setParams({ q: texto })` (línea 73) la URL cambia a `/buscar?q=b`, `/buscar?q=bo`… pero **se reemplazan los parámetros de la misma pantalla**, sin agregar entradas a la pila. "Atrás" vuelve directo a donde estaba antes del buscador. Con `router.push` se apilaría una pantalla `/buscar` por cada letra, y para salir habría que tocar atrás una vez por letra.
 
 ### B3. Mutar o reemplazar
 
