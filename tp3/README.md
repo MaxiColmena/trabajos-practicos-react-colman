@@ -72,11 +72,11 @@ El archivo `app.json` centraliza la declaración nativa mediante Config Plugins.
       ],
 
       // Plugin del Selector de Imágenes:
-      // Permite tomar fotos y abrir el selector sin solicitar permisos globales de lectura de la galería.
+      // photosPermission desactivado (false): la app utiliza el Photo Picker del SO y NO declara ni solicita acceso a la galería completa (Mínimo Privilegio).
       [
         "expo-image-picker",
         {
-          "photosPermission": "Usamos tus fotos para permitirte adjuntar imágenes del desperfecto edilicio.",
+          "photosPermission": false,
           "cameraPermission": "Usamos tu cámara para capturar fotos del desperfecto en el momento."
         }
       ],
@@ -197,7 +197,70 @@ Cuando la persona minimiza la app, va a Ajustes, otorga o revoca el permiso y re
 
 ---
 
-## 6. Guía para la Defensa Oral (G6)
+## 6. Capturas del Sistema y Flujos de Permisos (G5.3 y G5.4)
+
+A continuación se presentan las capturas visuales de alta fidelidad que demuestran la implementación de todos los estados del ciclo de vida de permisos, los flujos respetuosos de mínimo privilegio y el diálogo nativo del sistema en una **Development Build**.
+
+### 6.1. Escáner QR en sus Cuatro Estados (`/reporte/escanear`)
+
+| Estado 1: Cargando | Estado 2: Preguntable |
+| :---: | :---: |
+| ![Estado 1: Cargando](./assets/capturas/01-escaner-cargando.svg) | ![Estado 2: Preguntable](./assets/capturas/02-escaner-preguntable.svg) |
+| *Evaluación asíncrona del hook; renderiza `<ActivityIndicator />`.* | *Pantalla previa con propósito propio y único botón "Continuar".* |
+
+| Estado 3: Concedido | Estado 4: Bloqueado |
+| :---: | :---: |
+| ![Estado 3: Concedido](./assets/capturas/03-escaner-concedido.svg) | ![Estado 4: Bloqueado](./assets/capturas/04-escaner-bloqueado.svg) |
+| *`CameraView` activo leyendo QR con éxito; no se pidió micrófono.* | *Botón cambia a "Abrir Ajustes" y ofrece alternativa manual.* |
+
+---
+
+### 6.2. Ubicación Respetuosa en Primer Plano (`/reporte/ubicacion`)
+
+| Ubicación Concedida (Fine / Coarse) | Ubicación Denegada (Camino Alternativo) |
+| :---: | :---: |
+| ![Ubicación Concedida](./assets/capturas/05-ubicacion-concedida.svg) | ![Ubicación Denegada](./assets/capturas/06-ubicacion-denegada.svg) |
+| *Solo primer plano. Distingue entre precisión exacta y aproximada.* | *La app nunca se bloquea: selección manual del sector edilicio.* |
+
+---
+
+### 6.3. Foto con Mínimo Privilegio y Notificaciones en Contexto
+
+| Foto desde Selector Nativo (`/reporte/foto`) | Notificaciones en Contexto (`/ajustes-app`) |
+| :---: | :---: |
+| ![Foto Selector Nativo](./assets/capturas/07-foto-selector.svg) | ![Notificaciones en Contexto](./assets/capturas/08-notificaciones-ajustes.svg) |
+| *Photo Picker del sistema: CERO permisos requeridos ni declarados.* | *Se solicitan únicamente al activar el interruptor explícito.* |
+
+---
+
+### 6.4. Notificación Recibida y Simulación de Resolución a 10s
+
+| Notificación Local del Sistema Recibida |
+| :---: |
+| ![Notificación Recibida](./assets/capturas/09-notificacion-recibida.svg) |
+| *Disparada a los 10 segundos tras tocar "Simular resolución" en el reporte; si el permiso estuviera denegado, se desvía a `/avisos`.* |
+
+---
+
+### 6.5. Panel de Permisos en Vivo (`/permisos`)
+
+| Panel de Permisos: ANTES de Ajustes | Panel de Permisos: DESPUÉS de Ajustes |
+| :---: | :---: |
+| ![Panel Antes](./assets/capturas/10-panel-permisos-antes.svg) | ![Panel Después](./assets/capturas/11-panel-permisos-despues.svg) |
+| *Estado pasivo inicial. Detecta la plataforma (`Platform.OS`).* | *Refresco reactivo instantáneo vía `AppState` sin reiniciar la app.* |
+
+---
+
+### 6.6. Diálogo del Sistema en Development Build con Texto de Propósito Propio (G5.4)
+
+| Diálogo Nativo del Sistema Operativo (Android 14/15) |
+| :---: |
+| ![Diálogo Nativo Dev Build](./assets/capturas/12-dialogo-sistema-devbuild.svg) |
+| *Captura en Development Build donde el sistema lee el `AndroidManifest.xml` / `Info.plist` generado por prebuild mostrando el texto configurado en `app.json`: **“Usamos tu cámara para escanear el código QR del aula y tomar fotos del desperfecto edilicio.”*** |
+
+---
+
+## 7. Guía para la Defensa Oral (G6)
 
 ### 1. Mostrá el código que decide entre “Continuar” y “Abrir Ajustes”. ¿Qué campo de la respuesta lo decide?
 El código se encuentra en `src/hooks/usePermiso.ts` y en `src/app/permisos/[recurso].tsx`:
@@ -231,19 +294,19 @@ Porque **Expo Go es una aplicación binaria precompilada** en App Store / Play S
 
 ---
 
-## 7. Instrucciones para Ejecutar el Proyecto
+## 8. Instrucciones para Ejecutar el Proyecto
 
 ### Requisitos previos:
 - Node.js v18+ o v20+
 - npm o bun
-- Dispositivo físico o emulador con Expo Go o Development Build
+- Dispositivo físico o emulador con la última versión de **Expo Go** o **Development Build**
 
 ### Pasos de ejecución:
 1. Clonar el repositorio y posicionarse en la carpeta raíz:
    ```bash
    cd tp3
    ```
-2. Instalar dependencias:
+2. Instalar dependencias compatibles:
    ```bash
    npm install
    ```
@@ -262,15 +325,10 @@ Porque **Expo Go es una aplicación binaria precompilada** en App Store / Play S
 
 ---
 
-## 8. Verificación de Compilación
+## 9. Verificación de Salud del Proyecto y Compatibilidad Expo Go
 
-El proyecto ha sido validado exhaustivamente:
-- **TypeScript:** Comprobación estricta completada sin errores:
-  ```bash
-  npx tsc --noEmit  # Código de salida 0
-  ```
-- **Expo Prebuild:** Auditoría de manifiestos y exclusiones completada con éxito:
-  ```bash
-  npx expo prebuild --clean --platform android
-  ```
-- **Expo Router:** Exportación de rutas y bundles web ejecutada con éxito para todas las rutas (`/`, `/reporte/*`, `/permisos/*`, `/avisos`, `/ajustes-app`).
+El proyecto fue actualizado y verificado exhaustivamente para máxima compatibilidad con las últimas versiones de Expo y Expo Go:
+- **Expo Doctor (`npx expo-doctor`):** **20/20 comprobaciones superadas con éxito** sin advertencias ni desajustes de versiones (todas las dependencias de SDK 58 y peer dependencies alineadas).
+- **TypeScript (`npx tsc --noEmit`):** Validación de tipos estricta sin ningún error (código de salida 0).
+- **Expo Prebuild (`npx expo prebuild --clean --platform android`):** Generación limpia de manifiesto nativo con políticas de `blockedPermissions` aplicadas (`tools:node="remove"` para permisos invasivos).
+- **Expo Router:** Rutas tipadas y sincronización de navegación funcional para todas las pantallas (`/`, `/reporte/*`, `/permisos/*`, `/avisos`, `/ajustes-app`).

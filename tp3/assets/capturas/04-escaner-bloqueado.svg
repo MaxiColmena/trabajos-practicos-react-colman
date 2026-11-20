@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 820" width="400" height="820" style="font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.1" />
+    </filter>
+    <filter id="modalShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-opacity="0.25" />
+    </filter>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Device Frame (Titanium Gray / Slate) -->
+  <rect x="5" y="5" width="390" height="810" rx="42" fill="#0F172A" stroke="#334155" stroke-width="4"/>
+  
+  <!-- Screen Area -->
+  <rect x="15" y="15" width="370" height="790" rx="34" fill="#F8FAFC"/>
+  
+  <!-- Status Bar -->
+  <rect x="15" y="15" width="370" height="38" fill="#1E3A8A" rx="34" clip-path="url(#statusBarClip)"/>
+  <rect x="15" y="35" width="370" height="18" fill="#1E3A8A"/>
+  
+  <!-- Dynamic Island -->
+  <rect x="145" y="22" width="110" height="24" rx="12" fill="#020617"/>
+  <circle cx="236" cy="34" r="5" fill="#1E293B"/>
+
+  <!-- Status Bar Items -->
+  <text x="42" y="38" fill="#FFFFFF" font-size="12" font-weight="700">09:41</text>
+  <!-- Signal bars -->
+  <rect x="312" y="32" width="3" height="4" fill="#FFFFFF" rx="1"/>
+  <rect x="317" y="30" width="3" height="6" fill="#FFFFFF" rx="1"/>
+  <rect x="322" y="28" width="3" height="8" fill="#FFFFFF" rx="1"/>
+  <rect x="327" y="26" width="3" height="10" fill="#FFFFFF" rx="1"/>
+  <!-- Wifi icon -->
+  <path d="M 336 29 A 6 6 0 0 1 346 29 M 338 32 A 3 3 0 0 1 344 32 M 341 35 A 0.5 0.5 0 0 1 341 36" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Battery -->
+  <rect x="352" y="27" width="20" height="10" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
+  <rect x="354" y="29" width="14" height="6" rx="1.5" fill="#10B981"/>
+  <path d="M 373 30 L 373 34" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- App Header -->
+  <rect x="15" y="53" width="370" height="54" fill="url(#headerGrad)"/>
+  
+    <g transform="translate(25, 70)" cursor="pointer">
+      <circle cx="12" cy="12" r="14" fill="rgba(255,255,255,0.15)"/>
+      <path d="M 15 7 L 10 12 L 15 17" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="60" y="76" fill="#FFFFFF" font-size="16" font-weight="800">Escanear QR del Aula</text>
+    <text x="60" y="93" fill="#93C5FD" font-size="11" font-weight="500">Estado 4: Bloqueado</text>
+  
+
+  <!-- Screen Content Body -->
+  
+  <g transform="translate(25, 125)">
+    <!-- Card principal estado bloqueado -->
+    <rect x="0" y="0" width="350" height="330" rx="18" fill="#FFFFFF" stroke="#FECACA" filter="url(#shadow)"/>
+    
+    <circle cx="175" cy="46" r="28" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="2"/>
+    <text x="175" y="55" font-size="28" text-anchor="middle">🚫</text>
+    
+    <text x="175" y="98" font-size="16" font-weight="800" fill="#991B1B" text-anchor="middle">Estado 4: Permiso Bloqueado</text>
+    <text x="175" y="118" font-size="12" font-weight="600" fill="#DC2626" text-anchor="middle">status: "denied" | canAskAgain: false</text>
+    
+    <rect x="20" y="132" width="310" height="74" rx="10" fill="#FEF2F2" stroke="#FCA5A5"/>
+    <text x="30" y="152" font-size="11.5" font-weight="700" fill="#991B1B">El sistema operativo no permite volver a preguntar.</text>
+    <text x="30" y="168" font-size="11" fill="#B91C1C">Se seleccionó "No permitir" dos veces o se denegó</text>
+    <text x="30" y="184" font-size="11" fill="#B91C1C">permanentemente. Requiere habilitación en Ajustes.</text>
+
+    <!-- Botón Abrir Ajustes (reemplaza automáticamente a Continuar) -->
+    <rect x="25" y="222" width="300" height="44" rx="12" fill="#DC2626"/>
+    <text x="175" y="249" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">Abrir Ajustes</text>
+
+    <text x="175" y="286" font-size="11" font-weight="600" fill="#7F1D1D" text-anchor="middle">Ajustes &gt; Aplicaciones &gt; Mantenimiento IPF &gt; Permisos</text>
+    <text x="175" y="304" font-size="10.5" fill="#64748B" text-anchor="middle">Al volver, useRevisarAlVolver refresca sin reiniciar</text>
+  </g>
+
+  <!-- Alternativa a mano obligatoria -->
+  <g transform="translate(25, 475)">
+    <rect x="0" y="0" width="350" height="155" rx="14" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#shadow)"/>
+    <rect x="20" y="15" width="130" height="20" rx="6" fill="#DCFCE7"/>
+    <text x="85" y="29" font-size="10" font-weight="700" fill="#16A34A" text-anchor="middle">LA APP NUNCA SE TRABA</text>
+    
+    <text x="20" y="55" font-size="13" font-weight="700" fill="#0F172A">Alternativa: Ingresar aula a mano</text>
+    <rect x="20" y="68" width="310" height="38" rx="8" fill="#F1F5F9" stroke="#CBD5E1"/>
+    <text x="32" y="92" font-size="13" font-weight="600" fill="#0F172A">Aula 204 (2° Piso)</text>
+    
+    <rect x="20" y="114" width="310" height="32" rx="8" fill="#0F172A"/>
+    <text x="175" y="135" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Confirmar aula manual</text>
+  </g>
+
+
+  <!-- Bottom Navigation Tab Bar (if activeTab is set) -->
+  
+
+  <!-- Home Indicator -->
+  <rect x="135" y="792" width="130" height="4" rx="2" fill="#94A3B8"/>
+</svg>

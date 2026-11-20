@@ -60,7 +60,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Usamos tus fotos para permitirte adjuntar imágenes del desperfecto edilicio.",
+          "photosPermission": false,
           "cameraPermission": "Usamos tu cámara para capturar fotos del desperfecto en el momento."
         }
       ],
@@ -76,7 +76,12 @@
         {
           "microphonePermission": "Usamos tu micrófono para grabar una nota de voz describiendo el desperfecto."
         }
-      ]
+      ],
+      "expo-image",
+      "expo-splash-screen",
+      "expo-status-bar",
+      "expo-web-browser",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 820" width="400" height="820" style="font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.1" />
+    </filter>
+    <filter id="modalShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-opacity="0.25" />
+    </filter>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Device Frame (Titanium Gray / Slate) -->
+  <rect x="5" y="5" width="390" height="810" rx="42" fill="#0F172A" stroke="#334155" stroke-width="4"/>
+  
+  <!-- Screen Area -->
+  <rect x="15" y="15" width="370" height="790" rx="34" fill="#F8FAFC"/>
+  
+  <!-- Status Bar -->
+  <rect x="15" y="15" width="370" height="38" fill="#1E3A8A" rx="34" clip-path="url(#statusBarClip)"/>
+  <rect x="15" y="35" width="370" height="18" fill="#1E3A8A"/>
+  
+  <!-- Dynamic Island -->
+  <rect x="145" y="22" width="110" height="24" rx="12" fill="#020617"/>
+  <circle cx="236" cy="34" r="5" fill="#1E293B"/>
+
+  <!-- Status Bar Items -->
+  <text x="42" y="38" fill="#FFFFFF" font-size="12" font-weight="700">09:41</text>
+  <!-- Signal bars -->
+  <rect x="312" y="32" width="3" height="4" fill="#FFFFFF" rx="1"/>
+  <rect x="317" y="30" width="3" height="6" fill="#FFFFFF" rx="1"/>
+  <rect x="322" y="28" width="3" height="8" fill="#FFFFFF" rx="1"/>
+  <rect x="327" y="26" width="3" height="10" fill="#FFFFFF" rx="1"/>
+  <!-- Wifi icon -->
+  <path d="M 336 29 A 6 6 0 0 1 346 29 M 338 32 A 3 3 0 0 1 344 32 M 341 35 A 0.5 0.5 0 0 1 341 36" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Battery -->
+  <rect x="352" y="27" width="20" height="10" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
+  <rect x="354" y="29" width="14" height="6" rx="1.5" fill="#10B981"/>
+  <path d="M 373 30 L 373 34" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- App Header -->
+  <rect x="15" y="53" width="370" height="54" fill="url(#headerGrad)"/>
+  
+    <g transform="translate(25, 70)" cursor="pointer">
+      <circle cx="12" cy="12" r="14" fill="rgba(255,255,255,0.15)"/>
+      <path d="M 15 7 L 10 12 L 15 17" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="60" y="76" fill="#FFFFFF" font-size="16" font-weight="800">Marcar Ubicación</text>
+    <text x="60" y="93" fill="#93C5FD" font-size="11" font-weight="500">Ubicación Denegada (Alternativa Manual)</text>
+  
+
+  <!-- Screen Content Body -->
+  
+  <g transform="translate(25, 120)">
+    <!-- Banner de aviso denegado -->
+    <rect x="0" y="0" width="350" height="66" rx="12" fill="#FEF3C7" stroke="#FCD34D"/>
+    <text x="16" y="24" font-size="18">📍</text>
+    <text x="44" y="22" font-size="12" font-weight="700" fill="#92400E">Ubicación denegada en el dispositivo:</text>
+    <text x="44" y="38" font-size="11" fill="#B45309">No te preocupes: podés seleccionar el sector a mano.</text>
+    <text x="44" y="52" font-size="11" fill="#B45309">La app no se detiene ni exige habilitar el GPS.</text>
+  </g>
+
+  <!-- Card GPS saltado -->
+  <g transform="translate(25, 198)">
+    <rect x="0" y="0" width="350" height="70" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="20" y="26" font-size="12" font-weight="700" fill="#64748B">1. Detección GPS: Omitida</text>
+    <text x="20" y="44" font-size="11" fill="#94A3B8">Permiso omitido o denegado por el usuario.</text>
+    <rect x="240" y="20" width="90" height="28" rx="6" fill="#F1F5F9"/>
+    <text x="285" y="38" font-size="11" font-weight="600" fill="#475569" text-anchor="middle">Denegado</text>
+  </g>
+
+  <!-- Camino alternativo: Sector a mano -->
+  <g transform="translate(25, 280)">
+    <rect x="0" y="0" width="350" height="370" rx="16" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#shadow)"/>
+    <rect x="20" y="16" width="120" height="20" rx="6" fill="#ECFDF5"/>
+    <text x="80" y="30" font-size="10" font-weight="700" fill="#059669" text-anchor="middle">CAMINO ALTERNATIVO</text>
+
+    <text x="20" y="56" font-size="14" font-weight="800" fill="#0F172A">Elegir sector del edificio a mano</text>
+    <text x="20" y="74" font-size="11.5" fill="#64748B">Tocá el sector donde ocurrió el desperfecto:</text>
+
+    <g transform="translate(20, 88)">
+      <!-- Patio Central -->
+      <rect x="0" y="0" width="310" height="34" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="16" y="22" font-size="12" fill="#334155">Patio Central</text>
+
+      <!-- Estacionamiento Principal -->
+      <rect x="0" y="40" width="310" height="34" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="16" y="62" font-size="12" fill="#334155">Estacionamiento Principal</text>
+
+      <!-- Pasillo PB (SELECCIONADO) -->
+      <rect x="0" y="80" width="310" height="34" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.8"/>
+      <text x="16" y="102" font-size="12" font-weight="700" fill="#1D4ED8">✓ Pasillo Planta Baja (Aulas 101-110)</text>
+
+      <!-- Biblioteca -->
+      <rect x="0" y="120" width="310" height="34" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="16" y="142" font-size="12" fill="#334155">Biblioteca / Sala de Estudio</text>
+
+      <!-- Comedor -->
+      <rect x="0" y="160" width="310" height="34" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="16" y="182" font-size="12" fill="#334155">Comedor / Cantina</text>
+
+      <!-- Gimnasio -->
+      <rect x="0" y="200" width="310" height="34" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+      <text x="16" y="222" font-size="12" fill="#334155">Gimnasio / Campo de Deportes</text>
+    </g>
+
+    <!-- Botón Confirmar Selección Manual -->
+    <rect x="20" y="328" width="310" height="36" rx="10" fill="#0F172A"/>
+    <text x="175" y="351" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Confirmar Sector Seleccionado</text>
+  </g>
+
+
+  <!-- Bottom Navigation Tab Bar (if activeTab is set) -->
+  
+
+  <!-- Home Indicator -->
+  <rect x="135" y="792" width="130" height="4" rx="2" fill="#94A3B8"/>
+</svg>

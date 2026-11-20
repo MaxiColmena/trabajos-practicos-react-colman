@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 820" width="400" height="820" style="font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.1" />
+    </filter>
+    <filter id="modalShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-opacity="0.25" />
+    </filter>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Device Frame (Titanium Gray / Slate) -->
+  <rect x="5" y="5" width="390" height="810" rx="42" fill="#0F172A" stroke="#334155" stroke-width="4"/>
+  
+  <!-- Screen Area -->
+  <rect x="15" y="15" width="370" height="790" rx="34" fill="#F8FAFC"/>
+  
+  <!-- Status Bar -->
+  <rect x="15" y="15" width="370" height="38" fill="#1E3A8A" rx="34" clip-path="url(#statusBarClip)"/>
+  <rect x="15" y="35" width="370" height="18" fill="#1E3A8A"/>
+  
+  <!-- Dynamic Island -->
+  <rect x="145" y="22" width="110" height="24" rx="12" fill="#020617"/>
+  <circle cx="236" cy="34" r="5" fill="#1E293B"/>
+
+  <!-- Status Bar Items -->
+  <text x="42" y="38" fill="#FFFFFF" font-size="12" font-weight="700">09:41</text>
+  <!-- Signal bars -->
+  <rect x="312" y="32" width="3" height="4" fill="#FFFFFF" rx="1"/>
+  <rect x="317" y="30" width="3" height="6" fill="#FFFFFF" rx="1"/>
+  <rect x="322" y="28" width="3" height="8" fill="#FFFFFF" rx="1"/>
+  <rect x="327" y="26" width="3" height="10" fill="#FFFFFF" rx="1"/>
+  <!-- Wifi icon -->
+  <path d="M 336 29 A 6 6 0 0 1 346 29 M 338 32 A 3 3 0 0 1 344 32 M 341 35 A 0.5 0.5 0 0 1 341 36" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Battery -->
+  <rect x="352" y="27" width="20" height="10" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
+  <rect x="354" y="29" width="14" height="6" rx="1.5" fill="#10B981"/>
+  <path d="M 373 30 L 373 34" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- App Header -->
+  <rect x="15" y="53" width="370" height="54" fill="url(#headerGrad)"/>
+  
+    <text x="32" y="76" fill="#FFFFFF" font-size="16" font-weight="800">Development Build</text>
+    <text x="32" y="93" fill="#93C5FD" font-size="11" font-weight="500">Diálogo Nativo del Sistema</text>
+    <g transform="translate(345, 68)">
+      <circle cx="12" cy="12" r="14" fill="rgba(255,255,255,0.15)"/>
+      <text x="6" y="17" font-size="13">⚙️</text>
+    </g>
+  
+
+  <!-- Screen Content Body -->
+  
+  <!-- Pantalla atenuada de fondo (Backdrop) -->
+  <rect x="15" y="107" width="370" height="680" fill="rgba(15, 23, 42, 0.65)"/>
+
+  <!-- Diálogo nativo de Android 14/15 con texto de propósito propio -->
+  <g transform="translate(35, 250)">
+    <rect x="0" y="0" width="330" height="320" rx="28" fill="#F3EDF7" filter="url(#modalShadow)"/>
+
+    <!-- Ícono de la cámara de Android -->
+    <g transform="translate(145, 24)">
+      <circle cx="20" cy="20" r="22" fill="#E8DEF8"/>
+      <text x="20" y="26" font-size="20" text-anchor="middle">📷</text>
+    </g>
+
+    <!-- Título oficial del sistema -->
+    <text x="165" y="88" font-size="15" font-weight="700" fill="#1D1B20" text-anchor="middle">¿Permitir que Mantenimiento IPF</text>
+    <text x="165" y="106" font-size="15" font-weight="700" fill="#1D1B20" text-anchor="middle">tome fotos y grabe videos?</text>
+
+    <!-- TEXTO DE PROPÓSITO PROPIO (Demuestra app.json compilado en Development Build) -->
+    <rect x="20" y="122" width="290" height="58" rx="12" fill="#E8DEF8" stroke="#D0BCFF"/>
+    <text x="30" y="142" font-size="11" font-weight="700" fill="#21005D">Texto configurado en app.json:</text>
+    <text x="30" y="158" font-size="10.5" font-style="italic" fill="#381E72">"Usamos tu cámara para escanear el código QR</text>
+    <text x="30" y="171" font-size="10.5" font-style="italic" fill="#381E72">del aula y tomar fotos del desperfecto edilicio."</text>
+
+    <!-- Botones oficiales del sistema Android -->
+    <!-- Opción 1: Mientras la app está en uso -->
+    <rect x="20" y="194" width="290" height="34" rx="17" fill="#6750A4"/>
+    <text x="165" y="216" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Mientras la app está en uso</text>
+
+    <!-- Opción 2: Solo esta vez -->
+    <rect x="20" y="234" width="290" height="34" rx="17" fill="#FFFFFF" stroke="#CAC4D0"/>
+    <text x="165" y="256" font-size="12.5" font-weight="600" fill="#1D1B20" text-anchor="middle">Solo esta vez</text>
+
+    <!-- Opción 3: No permitir -->
+    <rect x="20" y="274" width="290" height="34" rx="17" fill="#FFFFFF" stroke="#CAC4D0"/>
+    <text x="165" y="296" font-size="12.5" font-weight="600" fill="#1D1B20" text-anchor="middle">No permitir</text>
+  </g>
+
+  <!-- Tag de aclaración técnica -->
+  <g transform="translate(25, 595)">
+    <rect x="0" y="0" width="350" height="85" rx="14" fill="#0F172A" stroke="rgba(255,255,255,0.2)"/>
+    <text x="20" y="26" font-size="12" font-weight="700" fill="#38BDF8">Requisito G5.4 — Diálogo del sistema en Dev Build:</text>
+    <text x="20" y="44" font-size="11" fill="#E2E8F0">• Demuestra la lectura de NSCameraUsageDescription y el</text>
+    <text x="20" y="58" font-size="11" fill="#E2E8F0">  plugin expo-camera en un binario compilado (no Expo Go).</text>
+    <text x="20" y="74" font-size="10.5" font-weight="600" fill="#93C5FD">Mínimo privilegio: microphonePermission: false</text>
+  </g>
+
+
+  <!-- Bottom Navigation Tab Bar (if activeTab is set) -->
+  
+
+  <!-- Home Indicator -->
+  <rect x="135" y="792" width="130" height="4" rx="2" fill="#94A3B8"/>
+</svg>
