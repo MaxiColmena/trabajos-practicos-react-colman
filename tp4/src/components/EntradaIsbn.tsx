@@ -17,7 +17,7 @@ export default function EntradaIsbn({ onBuscar }: { onBuscar: (isbn: string) => 
     <View style={estilos.contenedor}>
       <CampoTexto
         etiqueta="O escribí el ISBN (13 números)"
-        placeholder="978-84-450-7320-9"
+        placeholder="978-950-547-269-7"
         value={texto}
         onChangeText={setTexto}
         keyboardType="number-pad"
