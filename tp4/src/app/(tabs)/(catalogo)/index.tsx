@@ -6,10 +6,12 @@ import EstadoMensaje from '../../../components/EstadoMensaje';
 import FilaLibro from '../../../components/FilaLibro';
 import Separador from '../../../components/Separador';
 import { espacio } from '../../../constants/tema';
+import { useCatalogoInfinito } from '../../../hooks/useCatalogoInfinito';
 import { useLibros } from '../../../hooks/useLibros';
 
 export default function Catalogo() {
   const { libros, cargando, error, reintentar } = useLibros();
+  const { items, cargarMas } = useCatalogoInfinito(libros);
 
   if (cargando) {
     return <EstadoCargando mensaje="Buscando en los estantes…" />;
@@ -25,9 +27,12 @@ export default function Catalogo() {
 
   return (
     <FlatList
-      data={libros}
-      keyExtractor={(libro) => libro.isbn}
-      renderItem={({ item }) => <FilaLibro libro={item} />}
+      data={items}
+      // La clave sale del ISBN (más la tanda), nunca del índice de la fila
+      keyExtractor={(item) => item.clave}
+      renderItem={({ item }) => <FilaLibro libro={item.libro} />}
+      onEndReached={cargarMas}
+      onEndReachedThreshold={0.5}
       ItemSeparatorComponent={Separador}
       ListHeaderComponent={EncabezadoCatalogo}
       ListEmptyComponent={
