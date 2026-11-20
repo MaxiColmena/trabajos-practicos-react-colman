@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { AndroidImportance } from 'expo-notifications';
 import { CANAL_PRESTAMOS, SEGUNDOS_RECORDATORIO } from '../constants/biblioteca';
 
 // Que la notificación se vea aunque la app esté abierta
@@ -18,7 +19,7 @@ export async function crearCanalPrestamos(): Promise<void> {
   await Notifications.setNotificationChannelAsync(CANAL_PRESTAMOS, {
     name: 'Préstamos',
     description: 'Recordatorios para devolver los libros a tiempo',
-    importance: Notifications.AndroidImportance.HIGH,
+    importance: AndroidImportance.HIGH,
   });
 }
 
@@ -30,6 +31,8 @@ export async function notificacionesPermitidas(): Promise<boolean> {
 
 // Devuelve el identificador para poder cancelarla después
 export async function programarRecordatorio(titulo: string): Promise<string> {
+  // Por si el permiso se dio desde Ajustes y el canal todavía no existe
+  await crearCanalPrestamos();
   return Notifications.scheduleNotificationAsync({
     content: {
       title: 'Acordate de devolver tu libro',
