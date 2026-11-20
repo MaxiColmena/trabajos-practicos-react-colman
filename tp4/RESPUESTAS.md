@@ -348,9 +348,10 @@ export default function Catalogo() {
 
   return (
     <FlatList
-      data={libros}
-      keyExtractor={(libro) => libro.isbn}
-      renderItem={({ item }) => <FilaLibro libro={item} />}
+      data={items} // useCatalogoInfinito: los libros + tandas mezcladas al llegar al final
+      keyExtractor={(item) => item.clave} // ISBN + número de tanda, nunca el índice
+      renderItem={({ item }) => <FilaLibro libro={item.libro} />}
+      onEndReached={cargarMas}
       ItemSeparatorComponent={Separador}
       ListHeaderComponent={EncabezadoCatalogo} // recientes + Buscar y Escanear (con accessibilityRole)
       ListEmptyComponent={<EstadoMensaje icono="book-outline" titulo="Los estantes están vacíos" ... />}
@@ -421,6 +422,7 @@ Lo uso como parámetro de ruta y como `key`:
 - Es un dato **real** que está impreso en el libro, así el escáner lleva directo al detalle sin tablas de traducción.
 - Es único por edición: dos ediciones del mismo título tienen ISBN distintos, y eso está bien porque son ejemplares distintos.
 - `useLocalSearchParams` devuelve **strings**. El ISBN ya es un string, mientras que con un id numérico habría que hacer `Number(id)` y validar `NaN`, como en el ejercicio E1 del TP 2. Además, si guardara el ISBN como número perdería los ceros a la izquierda.
+- **El caso del scroll infinito:** el Catálogo repite los libros en tandas mezcladas (`hooks/useCatalogoInfinito.ts`), así que el mismo ISBN aparece varias veces y no puede ser la `key` solo. Uso `` `${isbn}-${tanda}` ``: sigue saliendo del ISBN y es estable, porque una tanda ya agregada no cambia de lugar. El índice de la fila no sirve porque no identifica al libro.
 - **La contra:** un libro sin ISBN (un apunte, un libro muy viejo) no tendría identificador. En ese caso usaría un código interno de la biblioteca con el mismo formato de 13 dígitos (un prefijo que no exista, como hacen los supermercados con sus códigos internos).
 
 **b) Estructuras: clase `Pila` con `#items`.**
