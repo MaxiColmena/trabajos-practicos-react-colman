@@ -168,4 +168,22 @@ En Expo Go se usa la forma `exp://IP:8081/--/ruta`. En una build propia, el esqu
 
 ## Capturas
 
-Pendiente: se agregan después de probar en el teléfono con Expo Go.
+Tomadas de la versión web (`npx expo start --web`) con pantalla de teléfono (390 × 844). Están en [`capturas/`](capturas). Para la captura del error, la falla de `obtenerLibros()` se forzó haciendo que `Math.random` devuelva 0,1, que es lo mismo que pasa 1 de cada 5 veces.
+
+| Catálogo cargando | Catálogo con error | Catálogo con datos | Buscador |
+|---|---|---|---|
+| ![](capturas/01-catalogo-cargando.png) | ![](capturas/02-catalogo-error.png) | ![](capturas/03-catalogo-con-datos.png) | ![](capturas/04-buscador.png) |
+
+| Detalle | Detalle inexistente | Reserva con ejemplares | Reserva sin ejemplares |
+|---|---|---|---|
+| ![](capturas/05-detalle.png) | ![](capturas/06-detalle-inexistente.png) | ![](capturas/07-reserva-con-ejemplares.png) | ![](capturas/08-reserva-sin-ejemplares.png) |
+
+| Mis reservas | Escáner (web: ingreso manual) | Permiso de notificaciones | Login con clave incorrecta |
+|---|---|---|---|
+| ![](capturas/09-mis-reservas.png) | ![](capturas/10-escaner-web-ingreso-manual.png) | ![](capturas/11-permiso-notificaciones.png) | ![](capturas/12-login-clave-incorrecta.png) |
+
+| Mostrador antes | Mostrador después de "Entregar al siguiente" | Aviso dentro de la app | 404 |
+|---|---|---|---|
+| ![](capturas/13-mostrador-antes.png) | ![](capturas/14-mostrador-despues.png) | ![](capturas/15-aviso-dentro-de-la-app.png) | ![](capturas/16-pagina-404.png) |
+
+**Faltan, porque solo se pueden sacar en el teléfono:** el escáner en sus cuatro estados con la cámara real y la notificación recibida. En la web, el escáner usa solo el ingreso manual y las notificaciones no funcionan.
