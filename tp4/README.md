@@ -208,7 +208,13 @@ Probado en un teléfono Android real con Expo Go. Están en [`capturas/telefono/
 
 #### Recorrido del permiso de cámara (Android, Expo Go)
 
-De *preguntable* a *bloqueado* negando el diálogo del sistema, y de vuelta a *concedido* desde Ajustes. Están en [`capturas/telefono/recorrido-camara/`](capturas/telefono/recorrido-camara).
+De *cargando* a *preguntable*, de ahí a *bloqueado* negando el diálogo del sistema, y de vuelta a *concedido* desde Ajustes. Están en [`capturas/telefono/recorrido-camara/`](capturas/telefono/recorrido-camara).
+
+| 0. Escáner: cargando |
+|---|
+| ![](capturas/telefono/recorrido-camara/0-escaner-cargando.jpg) |
+
+El estado *cargando* dura una fracción de segundo. Para poder capturarlo se agregó una demora temporal de 3 segundos en `usePermiso` solo para esta foto; no forma parte del código entregado (igual que la falla forzada de `obtenerLibros()` en las capturas web).
 
 | 1. Escáner: preguntable | 2. Pantalla previa | 3. Diálogo del sistema | 4. Escáner: bloqueado |
 |---|---|---|---|
@@ -220,4 +226,4 @@ De *preguntable* a *bloqueado* negando el diálogo del sistema, y de vuelta a *c
 
 En Expo Go el diálogo del sistema nombra a "Expo Go" y no muestra el texto de propósito de `app.json`; eso solo se ve en una build propia. Android tampoco muestra el texto de propósito en el diálogo (es de iOS).
 
-**Faltan:** el escáner en el estado *cargando* (dura una fracción de segundo) y la notificación recibida.
+**Falta:** la notificación recibida.
