@@ -10,6 +10,13 @@ El catálogo es de fantasía y aventura (Tolkien, El Principito, Narnia, Harry P
 - **Navegación:** Expo Router con rutas tipadas
 - **Módulos nativos:** solo `expo-camera` y `expo-notifications`
 
+### Extras
+
+- **Portadas reales:** cada tarjeta muestra la tapa del libro desde [Open Library](https://openlibrary.org) (`covers.openlibrary.org`), con `expo-image` y caché. Si no hay internet o la tapa no carga, se muestra una tapa con la inicial del título.
+- **Scroll infinito:** al llegar al final del Catálogo se agrega otra tanda con los mismos libros en orden aleatorio (`hooks/useCatalogoInfinito.ts`). La `key` de cada fila es `ISBN-tanda`, nunca el índice.
+- **Volver al Catálogo:** el modal de reserva y la pestaña Mis reservas tienen arriba un botón "Catálogo" que cierra lo que esté abierto y vuelve al menú principal.
+- **Debounce:** el buscador espera 300 ms sin escribir antes de buscar.
+
 ---
 
 ## Cómo ejecutarlo
@@ -66,11 +73,11 @@ src/app/
 |---|---|
 | `app/` | Solo rutas |
 | `components/` | Un componente por archivo (`Boton`, `FilaLibro`, `VisorCamara`…) |
-| `hooks/` | `useLibros`, `usePermiso`, `useRevisarAlVolver` |
-| `lib/` | API simulada, notificaciones, permisos, catálogo y fechas |
+| `hooks/` | `useLibros`, `useCatalogoInfinito`, `usePermiso`, `useRevisarAlVolver` |
+| `lib/` | API simulada, notificaciones, permisos, catálogo (con la URL de la portada), fechas y mezcla aleatoria |
 | `context/` | `BibliotecaContext`: sesión, recientes, préstamos, listas de espera y avisos |
 | `estructuras/` | `Pila` y `Cola` (las del TP 2, con `#items`, `tamanio`, `aArray()` y `clonar()`) |
-| `data/` | `libros.ts` (17 libros y las listas de espera iniciales) |
+| `data/` | `libros.ts` (17 libros y las listas de espera iniciales) y `portadas.ts` (id de cada tapa en Open Library) |
 | `types/` | Tipos de la app |
 | `constants/` | `tema.ts` (colores, espacios, tamaños), `biblioteca.ts` y `navegacion.ts` |
 
