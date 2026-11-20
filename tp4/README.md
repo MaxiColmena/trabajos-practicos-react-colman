@@ -126,7 +126,7 @@ En Expo Go se usa la forma `exp://IP:8081/--/ruta`. En una build propia, el esqu
 | `bibliotecaipf://libro/9788445073209` | Detalle de *El Hobbit*, con el Catálogo debajo |
 | `bibliotecaipf://libro/123` | Mensaje "Ese ISBN no es válido" con botón al Catálogo |
 | `bibliotecaipf://buscar?q=tolkien` | Buscador con los resultados de "tolkien" y las tabs debajo |
-| `bibliotecaipf://mostrador` (sin sesión) | No existe la ruta sin sesión → 404 |
+| `bibliotecaipf://mostrador` (sin sesión) | No se muestra el mostrador: la ruta está protegida |
 | `bibliotecaipf://reserva` | Redirige a Mis reservas |
 | `bibliotecaipf://escanear` (cámara bloqueada) | Escáner con "Abrir Ajustes" y el ingreso manual |
 
