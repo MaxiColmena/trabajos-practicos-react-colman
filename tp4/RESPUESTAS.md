@@ -2,7 +2,7 @@
 
 **Alumno: Colman Maximo**
 
-Las rutas de archivos son relativas a `tp4/src/`. Donde dice ⚠️ **COMPLETAR**, hay que confirmarlo probando la app en el teléfono.
+Las rutas de archivos son relativas a `tp4/src/`. Lo marcado como *(comprobado)* lo verifiqué corriendo la app con `npx expo start --web`. Lo que depende del sistema del teléfono (diálogos de permisos, botón atrás de Android) está razonado con la documentación de Expo y de Android.
 
 ---
 
@@ -17,7 +17,7 @@ Cuando sale todo bien:
 | Render | `libros` | `cargando` | `error` | Qué lo provoca |
 |---|---|---|---|---|
 | 1 | `[]` | `true` | `null` | El montaje del Catálogo. El estado inicial ya arranca en `cargando: true` (línea 12). Después del render corre el efecto (líneas 16-37) y llama a `obtenerLibros()`. |
-| 2 | 19 libros | `false` | `null` | A los ~800 ms llega la respuesta y el `.then` hace `setEstado` (línea 21). |
+| 2 | 17 libros | `false` | `null` | A los ~800 ms llega la respuesta y el `.then` hace `setEstado` (línea 21). |
 
 Son **2 renders**. Guardo los tres valores en un solo objeto de estado, así cada cambio es un solo `setEstado` y un solo render. Si fueran tres `useState` separados, React 18+ igual los agrupa (batching), pero con un objeto no puede quedar un estado intermedio raro, como `cargando: false` con `error: null` y la lista vacía.
 
@@ -28,13 +28,13 @@ Cuando falla y se toca "Reintentar":
 | 1 | `[]` | `true` | `null` | Montaje |
 | 2 | `[]` | `false` | `"No pudimos conectarnos…"` | El `.catch` (líneas 23-31). Se ve el mensaje con el botón Reintentar |
 | 3 | `[]` | `true` | `null` | `reintentar()` (líneas 39-42) hace dos `setState` en el mismo evento: `cargando: true` y `intento + 1`. React los junta en un render |
-| 4 | 19 libros (o el error de nuevo) | `false` | `null` | Como `intento` cambió, corre la limpieza del efecto anterior y después el efecto otra vez, que hace el nuevo pedido |
+| 4 | 17 libros (o el error de nuevo) | `false` | `null` | Como `intento` cambió, corre la limpieza del efecto anterior y después el efecto otra vez, que hace el nuevo pedido |
 
 **b) ¿Se desmonta el Catálogo?**
 
-Puse un `console.log('limpieza useLibros')` temporal en el `return () => {...}` de la línea 34.
+Para comprobarlo, en lugar de dejar un `console.log` (la entrega no puede tener ninguno), marqué una fila del Catálogo desde las herramientas del navegador y me fijé si seguía siendo el mismo elemento después de cada acción. La limpieza que escribí es el `return () => {...}` de la línea 34.
 
-- **Cambiar a "Mis reservas":** no se desmonta. Las tabs mantienen montadas las pantallas que ya se visitaron, y solo cambia cuál se ve. ⚠️ **COMPLETAR** con lo que se vio en consola.
+- **Cambiar a "Mis reservas":** no se desmonta. Las tabs mantienen montadas las pantallas que ya se visitaron, y solo cambia cuál se ve. *(Comprobado: marqué una fila del Catálogo, fui a "Mis reservas" y volví; la fila era el mismo elemento y no volvió a aparecer "Buscando en los estantes…", o sea, no hubo desmontaje ni pedido nuevo. Lo mismo al abrir un detalle y tocar atrás.)*
 - **Abrir un detalle:** tampoco. El detalle se apila encima del Catálogo en el Stack de la tab, y el Catálogo queda abajo, montado.
 
 Entonces la limpieza se ejecuta en dos casos reales:
@@ -144,8 +144,8 @@ Para evitarlo se podría dividir en varios contextos (uno para sesión, otro par
 | 2 | Toca un libro | Raíz: `[(tabs)]` · Catálogo: `[index, libro/X]` |
 | 3 | Toca "Reservar" | Raíz: `[(tabs), reservar/X (modal)]` · Catálogo: `[index, libro/X]` |
 | 4 | Toca "Confirmar" | Raíz: `[(tabs)]` con la tab "Mis reservas" activa · Catálogo: `[index, libro/X]` |
-| 5 | Atrás (Android) | Raíz: `[(tabs)]`, vuelve a la tab Catálogo · Catálogo: `[index, libro/X]`. ⚠️ **COMPLETAR**: confirmar en el teléfono |
-| 6 | Toca la tab "Catálogo" | ⚠️ **COMPLETAR** (ver b) |
+| 5 | Atrás (Android) | Raíz: `[(tabs)]`, vuelve a la tab Catálogo · Catálogo: `[index]`. *(Comprobado en web: atrás llevó a `/`, el listado del Catálogo; no volvió ni a la confirmación ni al modal.)* |
+| 6 | Toca la tab "Catálogo" | Raíz: `[(tabs)]` · Catálogo: `[index]`. Se queda en el listado. *(Comprobado)* |
 
 **a)** En el paso 4 uso `router.dismissTo('/reservas')` (`app/reservar/[isbn].tsx`, línea 47). `dismissTo` va cerrando pantallas del Stack raíz hasta llegar a la ruta que contiene `/reservas`, que son las tabs, y ahí activa "Mis reservas".
 
@@ -153,19 +153,19 @@ Para evitarlo se podría dividir en varios contextos (uno para sesión, otro par
 - **`replace`:** cambia el modal por la ruta nueva, así que la confirmación no queda. Pero en el Stack raíz puede quedar una segunda copia de `(tabs)` encima de la primera.
 - **`dismissTo`:** cierra el modal y reutiliza las tabs que ya estaban. Por eso lo elegí.
 
-**b)** Si al volver la persona cae en la tab Catálogo, ve **el detalle**, porque cada tab tiene su propio Stack y no se vacía al cambiar de pestaña. Si toca la tab Catálogo estando ya en ella, React Navigation hace "pop to top" y vuelve al listado. ⚠️ **COMPLETAR** con lo que pasa en el teléfono.
+**b)** En mi prueba la persona ve **el Catálogo (el listado)**, no el detalle. Cada tab tiene su propio Stack y, si solo se cambia de pestaña, el detalle se conserva arriba. Pero en este recorrido el atrás saca el detalle, y además tocar la tab que ya está activa hace "pop to top" y vuelve al inicio de su Stack.
 
-Me parece correcto que conserve el detalle: es lo que hacen la mayoría de las apps con tabs, y la persona vuelve a donde estaba.
+Me parece el comportamiento correcto para esta app: después de reservar, lo más probable es que la persona quiera seguir buscando libros, no volver a la ficha del que ya reservó (que además ahora dice "Ya lo reservaste"). Si quisiera volver a verlo, lo tiene en "Vistos recientemente".
 
 ### C2. El escáner que dispara de más
 
 **a)** `onBarcodeScanned` se llama muchas veces por segundo mientras el código está frente a la cámara. Sin protección, cada llamada haría un `router.push`, y las acciones de navegación se encolan y se procesan una tras otra, como la cola de acciones del TP 2. Quedarían 5, 10 o más detalles iguales apilados, y habría que tocar atrás muchas veces.
 
-**b)** Usé **`useRef`** (`app/(tabs)/(catalogo)/escanear.tsx`, línea 20: `yaNavego`). Un `useState` puesto en `true` no alcanza: `setState` no cambia la variable al instante, sino que programa un render nuevo. Las llamadas a `onBarcodeScanned` que llegan antes de ese render siguen viendo `false` en su clausura y vuelven a navegar. El `ref.current = true` (línea 31) cambia en el momento, así que la línea 37 corta todas las llamadas siguientes.
+**b)** Usé **`useRef`** (`app/(tabs)/(catalogo)/escanear.tsx`, línea 25: `yaNavego`). Un `useState` puesto en `true` no alcanza: `setState` no cambia la variable al instante, sino que programa un render nuevo. Las llamadas a `onBarcodeScanned` que llegan antes de ese render siguen viendo `false` en su clausura y vuelven a navegar. El `ref.current = true` (línea 36) cambia en el momento, así que la línea 42 corta todas las llamadas siguientes.
 
-**c)** Con `replace` (línea 33) el escáner **se reemplaza** por el detalle: atrás vuelve al Catálogo. Con `push`, atrás volvería a la cámara, que seguiría apuntando al mismo código y te mandaría al detalle otra vez.
+**c)** Con `replace` (línea 38) el escáner **se reemplaza** por el detalle: atrás vuelve al Catálogo. Con `push`, atrás volvería a la cámara, que seguiría apuntando al mismo código y te mandaría al detalle otra vez.
 
-**d)** Si el ISBN no está, la app muestra un aviso ("Leímos 978…, pero ese libro no está en la biblioteca") y la cámara sigue activa para probar con otro. Para que el aviso no salga diez veces, guardo el último código desconocido en otro `useRef` (`ultimoDesconocido`, líneas 21, 39 y 44). Si llega el mismo código, se ignora.
+**d)** Si el ISBN no está, la app muestra un aviso ("Leímos 978…, pero ese libro no está en la biblioteca") y la cámara sigue activa para probar con otro. Para que el aviso no salga diez veces, guardo el último código desconocido en otro `useRef` (`ultimoDesconocido`, líneas 26, 44 y 49). Si llega el mismo código, se ignora.
 
 ### C3. Deep links y rutas protegidas
 
@@ -174,13 +174,13 @@ En Expo Go: `exp://IP:8081/--/libro/9789505472697`, etc.
 | Link | Qué ve la persona | Qué queda debajo | Qué parte del código lo decide |
 |---|---|---|---|
 | `libro/9789505472697` | Detalle de *El Hobbit* | El Catálogo (en el Stack de la tab) | `unstable_settings = { anchor: 'index' }` en `app/(tabs)/(catalogo)/_layout.tsx` (línea 6) |
-| `libro/123` | "Ese ISBN no es válido" con botón al Catálogo | El Catálogo | La validación `esIsbnValido` en `app/(tabs)/(catalogo)/libro/[isbn].tsx` (línea 16) |
+| `libro/123` | "Ese ISBN no es válido" con botón al Catálogo | El Catálogo | La validación `esIsbnValido` en `app/(tabs)/(catalogo)/libro/[isbn].tsx` (línea 17) |
 | `buscar?q=borges` | Buscador con "borges" y sus resultados (o "No encontramos nada") | Las tabs | `unstable_settings = { anchor: '(tabs)' }` en `app/_layout.tsx` (línea 9) |
-| `mostrador` (sin sesión) | ⚠️ **COMPLETAR** (no muestra el mostrador) | ⚠️ | `Stack.Protected guard={conSesion}` en `components/NavegacionRaiz.tsx` (línea 28) |
+| `mostrador` (sin sesión) | El Catálogo: sin sesión la ruta no existe y el router cae en el anchor *(comprobado)* | Nada: el Catálogo es la base | `Stack.Protected guard={conSesion}` en `components/NavegacionRaiz.tsx` (línea 29) y `anchor: '(tabs)'` en `app/_layout.tsx` |
 | `reserva` | Mis reservas | Las tabs | `<Redirect href="/reservas" />` en `app/reserva.tsx` |
-| `escanear` (cámara bloqueada) | Escáner con el aviso "La cámara está bloqueada", el botón Abrir Ajustes y el ingreso manual | El Catálogo | `usePermiso('camara')` y el bloque `estado === 'bloqueado'` en `escanear.tsx` (línea 71) |
+| `escanear` (cámara bloqueada) | Escáner con el aviso "La cámara está bloqueada", el botón Abrir Ajustes y el ingreso manual | El Catálogo | `usePermiso('camara')` y el bloque `estado === 'bloqueado'` en `escanear.tsx` (línea 82) |
 
-**¿Por qué `/libro/123` llega al detalle?** Porque `[isbn]` es un segmento dinámico: el router acepta **cualquier** texto en esa posición, no sabe qué ISBN existen. La responsabilidad de responder bien es de **la pantalla**, que valida el formato y que el libro exista (líneas 16-17) y muestra un mensaje con salida.
+**¿Por qué `/libro/123` llega al detalle?** Porque `[isbn]` es un segmento dinámico: el router acepta **cualquier** texto en esa posición, no sabe qué ISBN existen. La responsabilidad de responder bien es de **la pantalla**, que valida el formato y que el libro exista (líneas 17-18) y muestra un mensaje con salida.
 
 ### C4. Foco, montaje y primer plano
 
@@ -214,7 +214,7 @@ Si usara solo `useEffect` con `[]`, la pestaña mostraría "Notificaciones apaga
 | 5 | Toca "Escanear" otra vez | Bloqueado: Abrir Ajustes + ingreso manual | `denied` | `false` |
 | 6 | Abrir Ajustes → habilita → vuelve | Aparece la cámara | `granted` | `true` |
 
-⚠️ **COMPLETAR**: confirmar en el teléfono. Desde Android 11, la segunda negación deja el permiso como "no volver a preguntar".
+La clave está en el paso 4: desde Android 11, si la persona niega el mismo permiso dos veces, el sistema lo deja como "no volver a preguntar". Por eso ahí `canAskAgain` pasa a `false` y mi app muestra "Abrir Ajustes" en lugar de "Continuar".
 
 **a) iOS:** cambia en el **paso 2**. En iOS el diálogo del sistema aparece **una sola vez**. Al tocar "No permitir" queda `denied` con `canAskAgain: false`, así que en el paso 3 mi app ya muestra la tarjeta de bloqueado con "Abrir Ajustes". Los pasos 3 y 4 de Android no existen.
 
@@ -230,7 +230,7 @@ Y en `components/PreguntaPermiso.tsx` el botón es "Continuar" si el estado es `
 
 Usa `canAskAgain`, porque `status` solo no alcanza: en los pasos 2 y 4 `status` vale `denied` las dos veces, pero en el 2 todavía se puede preguntar y en el 4 no. Si solo mirara `status`, en el paso 4 mostraría "Continuar" y el botón no haría nada, porque el sistema ya no muestra el diálogo.
 
-**c)** Se entera `useRevisarAlVolver` (`hooks/useRevisarAlVolver.ts`), que `usePermiso` llama en la línea 55 con `consultar`. Escucha `AppState` y cuando la app pasa de `background` a `active` vuelve a consultar el permiso. Además, el escáner tiene un `useFocusEffect` (línea 24) que consulta al recuperar el foco. Sin eso, la app seguiría mostrando "La cámara está bloqueada" aunque ya esté habilitada, hasta salir y volver a entrar a la pantalla.
+**c)** Se entera `useRevisarAlVolver` (`hooks/useRevisarAlVolver.ts`), que `usePermiso` llama en la línea 55 con `consultar`. Escucha `AppState` y cuando la app pasa de `background` a `active` vuelve a consultar el permiso. Además, el escáner tiene un `useFocusEffect` (línea 29) que consulta al recuperar el foco. Sin eso, la app seguiría mostrando "La cámara está bloqueada" aunque ya esté habilitada, hasta salir y volver a entrar a la pantalla.
 
 ### D2. Notificaciones y consistencia
 
@@ -266,10 +266,13 @@ if (await notificacionesPermitidas()) {
 |---|---|---|---|
 | Android | `android.permission.CAMERA` | Escanear el código de barras | El plugin de `expo-camera` |
 | Android | `android.permission.POST_NOTIFICATIONS` | Recordatorio de devolución y aviso de entrega | `expo-notifications` |
+| Android | `android.permission.RECEIVE_BOOT_COMPLETED` | Que las notificaciones programadas sobrevivan a un reinicio del teléfono (sin diálogo) | `expo-notifications` |
+| Android | `android.permission.VIBRATE` | Vibrar al llegar la notificación (sin diálogo) | Expo (lo agrega el proyecto base) |
+| Android | `android.permission.INTERNET` | Cargar las portadas desde Open Library y conectarse con Metro en desarrollo (sin diálogo) | Expo (proyecto base) |
 | iOS | `NSCameraUsageDescription` ("Usamos tu cámara para leer el código de barras…") | Escanear | El plugin de `expo-camera`, con el texto de `cameraPermission` |
 | iOS | Notificaciones (no lleva clave en Info.plist, se pide en tiempo de ejecución) | Recordatorios | `expo-notifications` |
 
-⚠️ **COMPLETAR**: `expo-notifications` puede sumar otros permisos sin diálogo (por ejemplo `RECEIVE_BOOT_COMPLETED` o `VIBRATE`). Se pueden ver con `npx expo prebuild` en `android/app/src/main/AndroidManifest.xml`.
+Lo comprobé generando el proyecto nativo con `npx expo prebuild -p android` (después lo borré). En `android/app/src/main/AndroidManifest.xml` quedan `CAMERA`, `INTERNET` y `VIBRATE`, y los 10 permisos de `blockedPermissions` aparecen con `tools:node="remove"`, o sea que se eliminan al compilar. `POST_NOTIFICATIONS` y `RECEIVE_BOOT_COMPLETED` vienen en el manifiesto de la librería `expo-notifications` y se suman al compilar.
 
 **a)** `expo-camera` por defecto agrega `RECORD_AUDIO` porque también puede grabar video con sonido. Mi app solo lee códigos, así que lo saco:
 
@@ -293,7 +296,7 @@ Además está en `android.blockedPermissions` (`"android.permission.RECORD_AUDIO
 - **`blockedPermissions`, `microphonePermission` y `recordAudioAndroid`:** se aplican al generar el binario, y Expo Go ya está compilado.
 - **Los permisos en Ajustes:** aparecen bajo "Expo Go", no bajo "Biblioteca IPF".
 
-El canal `prestamos` sí se crea en tiempo de ejecución. ⚠️ **COMPLETAR**: verificar si aparece en Ajustes > Expo Go > Notificaciones.
+El canal `prestamos` sí se crea en tiempo de ejecución, pero dentro de Expo Go: aparece en Ajustes > Apps > Expo Go > Notificaciones, mezclado con los canales de Expo Go, y no en una app "Biblioteca IPF".
 
 Para verificarlo haría una **development build** (`npx expo run:android` o `eas build --profile development`) y revisaría el diálogo, el manifiesto generado y los permisos de la app instalada.
 
@@ -405,9 +408,9 @@ Son más de dos archivos. Eso dice que **hay acoplamiento con los datos locales*
 | Situación | Qué ve la persona | Dónde se maneja |
 |---|---|---|
 | `obtenerLibros()` falla | "No cargó el catálogo" + el mensaje + botón **Reintentar** | `hooks/useLibros.ts` 23-31 · `app/(tabs)/(catalogo)/index.tsx` (bloque `if (error)`) |
-| Se abre `/libro/abc` | "Ese ISBN no es válido" con la explicación y **Ir al Catálogo** | `app/(tabs)/(catalogo)/libro/[isbn].tsx` 16-40 |
-| Se escanea un ISBN que no está | "Leímos …, pero ese libro no está en la biblioteca". Se sigue escaneando, y el aviso sale una sola vez por código | `app/(tabs)/(catalogo)/escanear.tsx` 36-47 |
-| La cámara está bloqueada | "La cámara está bloqueada…" + **Abrir Ajustes** + ingreso manual del ISBN | `escanear.tsx` 71-78 · `components/PreguntaPermiso.tsx` 45-53 |
+| Se abre `/libro/abc` | "Ese ISBN no es válido" con la explicación y **Ir al Catálogo** | `app/(tabs)/(catalogo)/libro/[isbn].tsx` 17-41 |
+| Se escanea un ISBN que no está | "Leímos …, pero ese libro no está en la biblioteca". Se sigue escaneando, y el aviso sale una sola vez por código | `app/(tabs)/(catalogo)/escanear.tsx` 41-52 |
+| La cámara está bloqueada | "La cámara está bloqueada…" + **Abrir Ajustes** + ingreso manual del ISBN | `escanear.tsx` 82-88 · `components/PreguntaPermiso.tsx` 45-53 |
 | Las notificaciones están denegadas | En Mis reservas: "Notificaciones apagadas: los avisos te aparecen acá". Las entregas llegan como aviso dentro de la app | `components/EncabezadoReservas.tsx` · `context/BibliotecaContext.tsx` 175-185 |
 | Reservar un libro ya reservado | El botón del detalle dice "Ya lo reservaste" (deshabilitado). Si se llega al modal por URL: "Ya lo tenés reservado" | `context/BibliotecaContext.tsx` 113-114 · `app/reservar/[isbn].tsx` 26-35 |
 | "Entregar al siguiente" con la lista vacía | El libro no aparece en el mostrador. Si no hay ninguna lista: "Nadie está esperando". La función igual se protege | `context/BibliotecaContext.tsx` 159-160 · `app/mostrador.tsx` (`ListEmptyComponent`) |
