@@ -230,8 +230,8 @@ En Expo Go el diálogo del sistema nombra a "Expo Go" y no muestra el texto de p
 
 El permiso se pide recién al activar "Recordarme". Están en [`capturas/telefono/notificaciones/`](capturas/telefono/notificaciones).
 
-| 1. Pantalla previa | 2. Diálogo de Expo Go | 3. Recordarme activado |
-|---|---|---|
-| ![](capturas/telefono/notificaciones/1-pantalla-previa.jpg) | ![](capturas/telefono/notificaciones/2-dialogo-expo-go.jpg) | ![](capturas/telefono/notificaciones/3-recordarme-activado.jpg) |
+| 1. Pantalla previa | 2. Diálogo de Expo Go | 3. Recordarme activado | 4. Notificación recibida |
+|---|---|---|---|
+| ![](capturas/telefono/notificaciones/1-pantalla-previa.jpg) | ![](capturas/telefono/notificaciones/2-dialogo-expo-go.jpg) | ![](capturas/telefono/notificaciones/3-recordarme-activado.jpg) | ![](capturas/telefono/notificaciones/4-notificacion-recibida.jpg) |
 
-**Falta:** la notificación recibida.
+La notificación llega 15 segundos después de activar "Recordarme" (modo demostración) y aparece bajo "Expo Go" porque la app corre dentro de Expo Go.
