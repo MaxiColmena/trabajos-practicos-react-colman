@@ -226,4 +226,12 @@ El estado *cargando* dura una fracción de segundo. Para poder capturarlo se agr
 
 En Expo Go el diálogo del sistema nombra a "Expo Go" y no muestra el texto de propósito de `app.json`; eso solo se ve en una build propia. Android tampoco muestra el texto de propósito en el diálogo (es de iOS).
 
+#### Permiso de notificaciones (Android, Expo Go)
+
+El permiso se pide recién al activar "Recordarme". Están en [`capturas/telefono/notificaciones/`](capturas/telefono/notificaciones).
+
+| 1. Pantalla previa | 2. Diálogo de Expo Go | 3. Recordarme activado |
+|---|---|---|
+| ![](capturas/telefono/notificaciones/1-pantalla-previa.jpg) | ![](capturas/telefono/notificaciones/2-dialogo-expo-go.jpg) | ![](capturas/telefono/notificaciones/3-recordarme-activado.jpg) |
+
 **Falta:** la notificación recibida.
