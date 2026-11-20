@@ -169,11 +169,11 @@ Me parece correcto que conserve el detalle: es lo que hacen la mayoría de las a
 
 ### C3. Deep links y rutas protegidas
 
-En Expo Go: `exp://IP:8081/--/libro/9788445073209`, etc.
+En Expo Go: `exp://IP:8081/--/libro/9789505472697`, etc.
 
 | Link | Qué ve la persona | Qué queda debajo | Qué parte del código lo decide |
 |---|---|---|---|
-| `libro/9788445073209` | Detalle de *El Hobbit* | El Catálogo (en el Stack de la tab) | `unstable_settings = { anchor: 'index' }` en `app/(tabs)/(catalogo)/_layout.tsx` (línea 6) |
+| `libro/9789505472697` | Detalle de *El Hobbit* | El Catálogo (en el Stack de la tab) | `unstable_settings = { anchor: 'index' }` en `app/(tabs)/(catalogo)/_layout.tsx` (línea 6) |
 | `libro/123` | "Ese ISBN no es válido" con botón al Catálogo | El Catálogo | La validación `esIsbnValido` en `app/(tabs)/(catalogo)/libro/[isbn].tsx` (línea 16) |
 | `buscar?q=borges` | Buscador con "borges" y sus resultados (o "No encontramos nada") | Las tabs | `unstable_settings = { anchor: '(tabs)' }` en `app/_layout.tsx` (línea 9) |
 | `mostrador` (sin sesión) | ⚠️ **COMPLETAR** (no muestra el mostrador) | ⚠️ | `Stack.Protected guard={conSesion}` en `components/NavegacionRaiz.tsx` (línea 28) |

@@ -70,7 +70,7 @@ src/app/
 | `lib/` | API simulada, notificaciones, permisos, catálogo y fechas |
 | `context/` | `BibliotecaContext`: sesión, recientes, préstamos, listas de espera y avisos |
 | `estructuras/` | `Pila` y `Cola` (las del TP 2, con `#items`, `tamanio`, `aArray()` y `clonar()`) |
-| `data/` | `libros.ts` (19 libros y las listas de espera iniciales) |
+| `data/` | `libros.ts` (17 libros y las listas de espera iniciales) |
 | `types/` | Tipos de la app |
 | `constants/` | `tema.ts` (colores, espacios, tamaños), `biblioteca.ts` y `navegacion.ts` |
 
@@ -123,7 +123,7 @@ En Expo Go se usa la forma `exp://IP:8081/--/ruta`. En una build propia, el esqu
 
 | Link | Qué se espera |
 |---|---|
-| `bibliotecaipf://libro/9788445073209` | Detalle de *El Hobbit*, con el Catálogo debajo |
+| `bibliotecaipf://libro/9789505472697` | Detalle de *El Hobbit*, con el Catálogo debajo |
 | `bibliotecaipf://libro/123` | Mensaje "Ese ISBN no es válido" con botón al Catálogo |
 | `bibliotecaipf://buscar?q=tolkien` | Buscador con los resultados de "tolkien" y las tabs debajo |
 | `bibliotecaipf://mostrador` (sin sesión) | No se muestra el mostrador: la ruta está protegida |
