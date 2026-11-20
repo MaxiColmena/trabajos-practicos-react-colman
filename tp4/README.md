@@ -186,4 +186,24 @@ Tomadas de la versión web (`npx expo start --web`) con pantalla de teléfono (3
 |---|---|---|---|
 | ![](capturas/13-mostrador-antes.png) | ![](capturas/14-mostrador-despues.png) | ![](capturas/15-aviso-dentro-de-la-app.png) | ![](capturas/16-pagina-404.png) |
 
-**Faltan, porque solo se pueden sacar en el teléfono:** el escáner en sus cuatro estados con la cámara real y la notificación recibida. En la web, el escáner usa solo el ingreso manual y las notificaciones no funcionan.
+### En el teléfono (Expo Go, Android)
+
+Probado en un teléfono Android real con Expo Go. Están en [`capturas/telefono/`](capturas/telefono).
+
+| Catálogo | Buscador vacío | Buscador con resultado | Detalle |
+|---|---|---|---|
+| ![](capturas/telefono/01-catalogo.jpg) | ![](capturas/telefono/02-buscador-vacio.jpg) | ![](capturas/telefono/03-buscador-resultado.jpg) | ![](capturas/telefono/04-detalle.jpg) |
+
+| Reserva con ejemplares | Detalle ya reservado | Mis reservas (notificaciones apagadas) | Pantalla previa de la cámara |
+|---|---|---|---|
+| ![](capturas/telefono/05-reserva-con-ejemplares.jpg) | ![](capturas/telefono/06-detalle-ya-reservado.jpg) | ![](capturas/telefono/07-mis-reservas.jpg) | ![](capturas/telefono/08-permiso-camara-previa.jpg) |
+
+| Escáner: preguntable | Escáner: concedido | Login del personal | Catálogo con sesión iniciada |
+|---|---|---|---|
+| ![](capturas/telefono/09-escaner-preguntable.jpg) | ![](capturas/telefono/10-escaner-concedido.jpg) | ![](capturas/telefono/11-login.jpg) | ![](capturas/telefono/12-catalogo-con-sesion.jpg) |
+
+| Mostrador |
+|---|
+| ![](capturas/telefono/13-mostrador.jpg) |
+
+**Faltan:** el escáner en los estados *cargando* y *bloqueado*, y la notificación recibida.
